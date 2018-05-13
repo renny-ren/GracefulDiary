@@ -4,14 +4,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scujcc.zhiwenandjunhong.gracefuldiary.db.DiaryDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 public class MainActivity extends AppCompatActivity {
+    TextView mMainDate;
+    TextView mDefaultTitle;
+    ImageView mDefaultBack;
+    ImageView mDefaultTest;
     LinearLayout mMainLinearLayout;
     LinearLayout mFirstItem;
 
@@ -23,8 +33,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
 
         getDiaryBeanList();
+        initTitle();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void initTitle() {
+        mMainDate.setText("今天是" + GetDate.getDate());
+        mDefaultTitle.setText("日记");
+        mDefaultBack.setVisibility(View.INVISIBLE);
+        mDefaultTest.setVisibility(View.INVISIBLE);
     }
 
     private List<DiaryBean> getDiaryBeanList() {
