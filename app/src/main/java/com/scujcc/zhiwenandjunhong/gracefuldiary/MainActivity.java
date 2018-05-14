@@ -2,12 +2,17 @@ package com.scujcc.zhiwenandjunhong.gracefuldiary;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
+
+
 
 import com.scujcc.zhiwenandjunhong.gracefuldiary.db.DiaryDatabaseHelper;
 
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mDefaultTitle;
     ImageView mDefaultBack;
     ImageView mDefaultTest;
+    RecyclerView mShowDiary;
     LinearLayout mMainLinearLayout;
     LinearLayout mFirstItem;
 
@@ -33,7 +39,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppManager.getAppManager().addActivity(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        EventBus.getDefault().register(this);
+
         mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
+        mShowDiary.setLayoutManager(new LinearLayoutManager(this));
+        mShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
 
         getDiaryBeanList();
         initTitle();
