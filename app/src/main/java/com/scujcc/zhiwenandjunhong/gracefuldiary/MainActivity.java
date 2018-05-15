@@ -12,15 +12,12 @@ import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
-
-
 import com.scujcc.zhiwenandjunhong.gracefuldiary.db.DiaryDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity {
     TextView mMainDate;
@@ -31,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mMainLinearLayout;
     LinearLayout mFirstItem;
 
-
     private List<DiaryBean> mDiaryBeanList;
     private DiaryDatabaseHelper mHelper;
+    private static TextView mText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
         mShowDiary.setLayoutManager(new LinearLayoutManager(this));
         mShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
+        mText = new TextView(this);
+        mText.setText("hello, world!");
 
         getDiaryBeanList();
         initTitle();
@@ -58,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AppManager.getAppManager().AppExit(this);
     }
 
     private void initTitle() {
