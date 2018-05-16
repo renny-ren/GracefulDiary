@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AppManager.getAppManager().addActivity(this);
+        ButterKnife.bind(this);
 
         StatusBar.compat(this, Color.parseColor("#161414"));
 
@@ -68,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         AppManager.getAppManager().AppExit(this);
+    }
+
+    @OnClick(R.id.main_enter_edit)
+    public void onClick() {
+        DiaryActivity.startActivity(this);
     }
 
     private void initTitle() {
