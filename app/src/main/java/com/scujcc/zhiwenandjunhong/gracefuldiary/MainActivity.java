@@ -2,6 +2,7 @@ package com.scujcc.zhiwenandjunhong.gracefuldiary;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
     TextView mMainDate;
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AppManager.getAppManager().addActivity(this);
+
+        StatusBar.compat(this, Color.parseColor("#161414"));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
