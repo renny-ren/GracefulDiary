@@ -19,17 +19,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
+    @Bind(R.id.main_tv_date)
     TextView mMainDate;
+    @Bind(R.id.main_tv_title)
     TextView mDefaultTitle;
+    @Bind(R.id.main_iv_back)
     ImageView mDefaultBack;
+    @Bind(R.id.main_iv_test)
     ImageView mDefaultTest;
+    @Bind(R.id.main_rv_show_diary)
     RecyclerView mShowDiary;
+    @Bind(R.id.main_ll)
     LinearLayout mMainLinearLayout;
+    @Bind(R.id.first_item)
     LinearLayout mFirstItem;
 
     private List<DiaryBean> mDiaryBeanList;
