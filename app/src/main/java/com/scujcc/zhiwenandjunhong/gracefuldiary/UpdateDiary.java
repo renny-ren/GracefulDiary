@@ -5,17 +5,13 @@ package com.scujcc.zhiwenandjunhong.gracefuldiary;
  */
 
 public class UpdateDiary {
-        private int position;
+    private int position;
 
-        public UpdateDiary(int position) {
+    public UpdateDiary(int position) {
             this.position = position;
         }
 
-        public void setPosition(int position) {
-            this.position = position;
-        }
-
-        public int getPosition() {
+    public int getPosition() {
             return position;
         }
 }

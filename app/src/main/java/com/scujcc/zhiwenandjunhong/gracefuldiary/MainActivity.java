@@ -1,5 +1,7 @@
 package com.scujcc.zhiwenandjunhong.gracefuldiary;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,31 +22,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.trity.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
+    @Bind(R.id.common_iv_back)
+    ImageView mCommonIvBack;
+    @Bind(R.id.common_tv_title)
+    TextView mCommonTvTitle;
+    @Bind(R.id.common_iv_test)
+    ImageView mCommonIvTest;
+    @Bind(R.id.common_title_ll)
+    LinearLayout mCommonTitleLl;
+    @Bind(R.id.main_iv_circle)
+    ImageView mMainIvCircle;
     @Bind(R.id.main_tv_date)
-    TextView mMainDate;
-    @Bind(R.id.main_tv_title)
-    TextView mDefaultTitle;
-    @Bind(R.id.main_iv_back)
-    ImageView mDefaultBack;
-    @Bind(R.id.main_iv_test)
-    ImageView mDefaultTest;
+    TextView mMainTvDate;
+    @Bind(R.id.main_tv_content)
+    TextView mMainTvContent;
+    @Bind(R.id.item_ll_control)
+    LinearLayout mItemLlControl;
+
     @Bind(R.id.main_rv_show_diary)
-    RecyclerView mShowDiary;
-    @Bind(R.id.main_ll)
-    LinearLayout mMainLinearLayout;
-    @Bind(R.id.first_item)
-    LinearLayout mFirstItem;
+    RecyclerView mMainRvShowDiary;
+    @Bind(R.id.main_fab_enter_edit)
+    android.support.design.widget.FloatingActionButton mMainFabEnterEdit;
+    @Bind(R.id.main_rl_main)
+    RelativeLayout mMainRlMain;
+    @Bind(R.id.item_first)
+    LinearLayout mItemFirst;
+    @Bind(R.id.main_ll_main)
+    LinearLayout mMainLlMain;
 
     private List<DiaryBean> mDiaryBeanList;
     private DiaryDatabaseHelper mHelper;
     private static TextView mText;
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
 
         mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
-        mShowDiary.setLayoutManager(new LinearLayoutManager(this));
-        mShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
+        mMainRvShowDiary.setLayoutManager(new LinearLayoutManager(this));
+        mMainRvShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
         mText = new TextView(this);
         mText.setText("hello, world!");
 
@@ -81,16 +104,16 @@ public class MainActivity extends AppCompatActivity {
         AppManager.getAppManager().AppExit(this);
     }
 
-    @OnClick(R.id.main_enter_edit)
+    @OnClick(R.id.main_fab_enter_edit)
     public void onClick() {
-        DiaryActivity.startActivity(this);
+        AddDiaryActivity.startActivity(this);
     }
 
     private void initTitle() {
-        mMainDate.setText("今天是" + GetDate.getDate());
-        mDefaultTitle.setText("日记");
-        mDefaultBack.setVisibility(View.INVISIBLE);
-        mDefaultTest.setVisibility(View.INVISIBLE);
+        mMainTvDate.setText("今天是" + GetDate.getDate());
+        mCommonTvTitle.setText("日记");
+        mCommonIvBack.setVisibility(View.INVISIBLE);
+        mCommonIvTest.setVisibility(View.INVISIBLE);
     }
 
     private List<DiaryBean> getDiaryBeanList() {
@@ -104,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 String current_date = cursor.getString(cursor.getColumnIndex("date"));
                 String date = GetDate.getDate().toString();
                 if (current_date.equals(date)) {
-                    mMainLinearLayout.removeView(mFirstItem);
+                    mMainLlMain.removeView(mItemFirst);
                     break;
                 }
             } while (cursor.moveToNext());
@@ -130,4 +153,13 @@ public class MainActivity extends AppCompatActivity {
         mDiaryBeanList = diaryList;
         return mDiaryBeanList;
     }
+
+    @Subscribe
+    public void startUpdateDiaryActivity(UpdateDiary event) {
+        String title = mDiaryBeanList.get(event.getPosition()).getTitle();
+        String content = mDiaryBeanList.get(event.getPosition()).getContent();
+        String tag = mDiaryBeanList.get(event.getPosition()).getTag();
+        UpdateDiaryActivity.startActivity(this, title, content, tag);
+    }
+
 }

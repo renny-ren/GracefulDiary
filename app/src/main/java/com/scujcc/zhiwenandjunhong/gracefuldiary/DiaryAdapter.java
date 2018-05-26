@@ -37,7 +37,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
     @Override
     public DiaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DiaryViewHolder(mLayoutInflater.inflate(R.layout.diary_item, parent, false)); // diary_item 作为 RecyclerView 的子布局
+        return new DiaryViewHolder(mLayoutInflater.inflate(R.layout.item_rv_diary, parent, false)); // diary_item 作为 RecyclerView 的子布局
     }
 
     @Override

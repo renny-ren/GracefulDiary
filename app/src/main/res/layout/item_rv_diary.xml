@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_ll"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingRight="10dp"
-    android:background="@color/white">
+              android:id="@+id/item_ll"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingRight="10dp"
+              android:background="@color/white"
+    >
 
 
     <LinearLayout
@@ -13,7 +14,8 @@
         android:layout_height="25dp"
         android:orientation="horizontal"
         android:paddingLeft="10.8dp"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        >
 
         <ImageView
             android:id="@+id/main_iv_circle"
@@ -21,7 +23,8 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/circle"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            />
 
         <TextView
             android:id="@+id/main_tv_date"
@@ -31,20 +34,24 @@
             android:gravity="center_vertical"
             android:paddingLeft="4dp"
             android:paddingTop="1dp"
-            android:text="2018年05月14日"
-            android:textSize="14sp" />
+            android:text="2018年05月18日"
+            android:textSize="14sp"
+            />
+
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <LinearLayout
             android:layout_width="23dp"
             android:layout_height="match_parent"
-            android:background="@drawable/linear_style">
+            android:background="@drawable/linear_style"
+            >
         </LinearLayout>
 
 
@@ -52,14 +59,16 @@
             android:id="@+id/item_ll_control"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:id="@+id/main_ll_title"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:orientation="horizontal"
-                android:background="#ffffff">
+                android:background="#ffffff"
+                >
 
 
                 <TextView
@@ -70,9 +79,10 @@
                     android:layout_height="32dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="16dp"
-                    android:text="这是一个晴朗的早晨"
+                    android:text="哈哈哈哈"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="19sp"
+                    />
             </LinearLayout>
 
 
@@ -85,16 +95,19 @@
                 android:lineSpacingExtra="4dp"
                 android:paddingLeft="33dp"
                 android:paddingRight="15dp"
-                android:text="这家伙很懒，什么也没留下..."
+                android:text="         这是日记内容这是日记内容这是日记内容这是日记内容这是日记内容这是日记内容这是日记内容这是日记内容"
                 android:textColor="#1d1c1c"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+
+                />
 
             <RelativeLayout
                 android:id="@+id/item_rl_edit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:paddingRight="5dp"
-                android:background="#ffffff">
+                android:background="#ffffff"
+                >
 
                 <ImageView
                     android:id="@+id/main_iv_edit"
@@ -102,17 +115,25 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/edit" />
+                    android:src="@drawable/edit"
+                    />
+
+
             </RelativeLayout>
 
             <LinearLayout
                 android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="20dp">
+
             </LinearLayout>
 
+
         </LinearLayout>
+
+
     </LinearLayout>
+
 </LinearLayout>
 
 
