@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         mDiaryBeanList = new ArrayList<>();
         List<DiaryBean> diaryList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = mHelper.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.query("query", null, null, null, null,null, null);
+        Cursor cursor = sqLiteDatabase.query("diary", null, null, null, null,null, null);
 
         if (cursor.moveToFirst()) {
             do {
