@@ -61,12 +61,20 @@ public class MainActivity extends AppCompatActivity {
 
     private List<DiaryBean> mDiaryBeanList;
     private DiaryDatabaseHelper mHelper;
-    private static TextView mText;
+    private static TextView mTvTest;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
+
+    private void initTitle() {
+        mMainTvDate.setText("今天，" + GetDate.getDate());
+        mCommonTvTitle.setText("小美好-可能是锦城最好的日记APP");
+        mCommonIvBack.setVisibility(View.INVISIBLE);
+        mCommonIvTest.setVisibility(View.INVISIBLE);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,22 +82,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AppManager.getAppManager().addActivity(this);
         ButterKnife.bind(this);
-
         StatusBar.compat(this, Color.parseColor("#161414"));
-
+        mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
         EventBus.getDefault().register(this);
-
-        mHelper = new DiaryDatabaseHelper(this, "Diary.db", null, 1);
-        mMainRvShowDiary.setLayoutManager(new LinearLayoutManager(this));
-        mMainRvShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
-        mText = new TextView(this);
-        mText.setText("hello, world!");
-
+        SpHelper spHelper = SpHelper.getInstance(this);
         getDiaryBeanList();
         initTitle();
+        mMainRvShowDiary.setLayoutManager(new LinearLayoutManager(this));
+        mMainRvShowDiary.setAdapter(new DiaryAdapter(this, mDiaryBeanList));
+        mTvTest = new TextView(this);
+        mTvTest.setText("Hello, world!");
     }
 
     @Override
@@ -98,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        AppManager.getAppManager().AppExit(this);
+    @Subscribe
+    public void startUpdateDiaryActivity(UpdateDiary event) {
+        String title = mDiaryBeanList.get(event.getPosition()).getTitle();
+        String content = mDiaryBeanList.get(event.getPosition()).getContent();
+        String tag = mDiaryBeanList.get(event.getPosition()).getTag();
+        UpdateDiaryActivity.startActivity(this, title, content, tag);
     }
 
     @OnClick(R.id.main_fab_enter_edit)
@@ -109,39 +115,39 @@ public class MainActivity extends AppCompatActivity {
         AddDiaryActivity.startActivity(this);
     }
 
-    private void initTitle() {
-        mMainTvDate.setText("今天是" + GetDate.getDate());
-        mCommonTvTitle.setText("日记");
-        mCommonIvBack.setVisibility(View.INVISIBLE);
-        mCommonIvTest.setVisibility(View.INVISIBLE);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AppManager.getAppManager().AppExit(this);
     }
 
+
     private List<DiaryBean> getDiaryBeanList() {
+
         mDiaryBeanList = new ArrayList<>();
         List<DiaryBean> diaryList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = mHelper.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.query("diary", null, null, null, null,null, null);
+        Cursor cursor = sqLiteDatabase.query("Diary", null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
-                String current_date = cursor.getString(cursor.getColumnIndex("date"));
-                String date = GetDate.getDate().toString();
-                if (current_date.equals(date)) {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                String dateSystem = GetDate.getDate().toString();
+                if (date.equals(dateSystem)) {
                     mMainLlMain.removeView(mItemFirst);
                     break;
                 }
             } while (cursor.moveToNext());
         }
 
+
         if (cursor.moveToFirst()) {
             do {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
                 String title = cursor.getString(cursor.getColumnIndex("title"));
                 String content = cursor.getString(cursor.getColumnIndex("content"));
-                String mood = cursor.getString(cursor.getColumnIndex("mood"));
-                String weather = cursor.getString(cursor.getColumnIndex("weather"));
-                String date = cursor.getString(cursor.getColumnIndex("date"));
                 String tag = cursor.getString(cursor.getColumnIndex("tag"));
-                mDiaryBeanList.add(new DiaryBean(title, content, mood, weather, date, tag));
+                mDiaryBeanList.add(new DiaryBean(date, title, content, tag));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -153,13 +159,4 @@ public class MainActivity extends AppCompatActivity {
         mDiaryBeanList = diaryList;
         return mDiaryBeanList;
     }
-
-    @Subscribe
-    public void startUpdateDiaryActivity(UpdateDiary event) {
-        String title = mDiaryBeanList.get(event.getPosition()).getTitle();
-        String content = mDiaryBeanList.get(event.getPosition()).getContent();
-        String tag = mDiaryBeanList.get(event.getPosition()).getTag();
-        UpdateDiaryActivity.startActivity(this, title, content, tag);
-    }
-
 }

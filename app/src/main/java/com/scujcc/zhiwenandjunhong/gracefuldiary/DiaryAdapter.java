@@ -18,7 +18,8 @@ import java.util.List;
  * Created by junhongren on 14/5/2018.
  */
 
-public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder>{
+public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
+
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private List<DiaryBean> mDiaryBeanList;
@@ -29,15 +30,9 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mDiaryBeanList = mDiaryBeanList;
     }
-
-    @Override
-    public int getItemCount() {
-        return mDiaryBeanList.size();
-    }
-
     @Override
     public DiaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DiaryViewHolder(mLayoutInflater.inflate(R.layout.item_rv_diary, parent, false)); // diary_item 作为 RecyclerView 的子布局
+        return new DiaryViewHolder(mLayoutInflater.inflate(R.layout.item_rv_diary, parent, false));
     }
 
     @Override
@@ -65,7 +60,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                     holder.mIvEdit.setVisibility(View.VISIBLE);
                 }
                 if(mEditPosition != position){
-                    System.out.println("Item changed.");
                     notifyItemChanged(mEditPosition);
                 }
                 mEditPosition = position;
@@ -80,7 +74,13 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return mDiaryBeanList.size();
+    }
+
     public static class DiaryViewHolder extends RecyclerView.ViewHolder{
+
         TextView mTvDate;
         TextView mTvTitle;
         TextView mTvContent;

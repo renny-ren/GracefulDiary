@@ -12,12 +12,10 @@ public class DiaryBean {
     private String date;
     private String tag;
 
-    public DiaryBean(String title, String content, String mood, String weather, String date, String tag) {
+    public DiaryBean(String date, String title, String content, String tag) {
+        this.date = date;
         this.title = title;
         this.content = content;
-        this.mood = mood;
-        this.weather = weather;
-        this.date = date;
         this.tag = tag;
     }
 
