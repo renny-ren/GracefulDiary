@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.scujcc.zhiwenandjunhong.gracefuldiary.Bean.DiaryBean;
 import com.scujcc.zhiwenandjunhong.gracefuldiary.db.DiaryDatabaseHelper;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cc.trity.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTitle() {
         mMainTvDate.setText("今天，" + GetDate.getDate());
-        mCommonTvTitle.setText("小美好-可能是锦城最好的日记APP");
+        mCommonTvTitle.setText("小美好 - 日记记录美好生活");
         mCommonIvBack.setVisibility(View.INVISIBLE);
         mCommonIvTest.setVisibility(View.INVISIBLE);
     }

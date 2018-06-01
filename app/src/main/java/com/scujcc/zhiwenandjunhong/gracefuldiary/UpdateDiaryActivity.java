@@ -105,7 +105,6 @@ public class UpdateDiaryActivity extends AppCompatActivity {
                 alertDialogBuilder.setMessage("确定要删除该日记吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-//                        String title = mUpdateDiaryEtTitle.getText().toString();
                         String tag = mTvTag.getText().toString();
                         SQLiteDatabase dbDelete = mHelper.getWritableDatabase();
                         dbDelete.delete("Diary", "tag = ?", new String[]{tag});

@@ -16,37 +16,30 @@ public class StatusBar {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void compat(Activity activity, int statusColor)
     {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if (statusColor != -1)
         {
-            if (statusColor != -1)
-            {
-                activity.getWindow().setStatusBarColor(statusColor);
-            }
+            activity.getWindow().setStatusBarColor(statusColor);
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        int color = Color.parseColor("#20000000");
+        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        if (statusColor != -1)
         {
-            int color = Color.parseColor("#20000000");
-            ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-            if (statusColor != -1)
-            {
-                color = statusColor;
-            }
-            View statusBarView = contentView.getChildAt(0);
-
-            if (statusBarView != null && statusBarView.getMeasuredHeight() == getStatusBarHeight(activity))   // 避免改变颜色时重复添加 statusBarView
-            {
-                statusBarView.setBackgroundColor(color);
-                return;
-            }
-            statusBarView = new View(activity);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
-            statusBarView.setBackgroundColor(color);
-            contentView.addView(statusBarView, lp);
+            color = statusColor;
         }
+        View statusBarView = contentView.getChildAt(0);
+
+        if (statusBarView != null && statusBarView.getMeasuredHeight() == getStatusBarHeight(activity))   // 避免改变颜色时重复添加 statusBarView
+        {
+            statusBarView.setBackgroundColor(color);
+            return;
+        }
+        statusBarView = new View(activity);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                getStatusBarHeight(activity));
+        statusBarView.setBackgroundColor(color);
+        contentView.addView(statusBarView, lp);
 
     }
 

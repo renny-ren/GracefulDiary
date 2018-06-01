@@ -1,4 +1,4 @@
-package com.scujcc.zhiwenandjunhong.gracefuldiary;
+package com.scujcc.zhiwenandjunhong.gracefuldiary.Bean;
 
 /**
  * Created by junhongren on 12/5/2018.
@@ -36,6 +36,5 @@ public class DiaryBean {
 
     public String getTag() { return tag; }
     public void setTag() { this.tag = tag; }
-
 
 }

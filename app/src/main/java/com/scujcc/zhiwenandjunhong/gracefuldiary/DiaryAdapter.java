@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.scujcc.zhiwenandjunhong.gracefuldiary.Bean.DiaryBean;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;

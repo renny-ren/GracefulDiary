@@ -34,14 +34,6 @@ public class AppManager {
         activityStack.add(activity);
     }
 
-//    public void finishActivity(AppCompatActivity activity){
-//        if(activity != null){
-//            activityStack.remove(activity);
-//            activity.finish();
-//            activity = null;
-//        }
-//    }
-
     public void finishAllActivity(){
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
